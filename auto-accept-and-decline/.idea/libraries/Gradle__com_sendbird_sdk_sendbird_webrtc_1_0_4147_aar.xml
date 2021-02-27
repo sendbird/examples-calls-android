@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.sendbird.sdk:sendbird-webrtc:1.0.4147@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b7ab9176aef9b35321de2f9a8cf2fc6d/jetified-sendbird-webrtc-1.0.4147/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/236fd9e418669e49b24081969c7994e2/jetified-sendbird-webrtc-1.0.4147/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/236fd9e418669e49b24081969c7994e2/jetified-sendbird-webrtc-1.0.4147/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/236fd9e418669e49b24081969c7994e2/jetified-sendbird-webrtc-1.0.4147/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
