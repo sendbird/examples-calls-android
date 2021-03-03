@@ -13,11 +13,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.autoacceptanddecline.R;
+import com.example.autoacceptanddecline.utils.ActivityUtils;
+import com.example.autoacceptanddecline.utils.AuthenticationUtils;
 import com.example.autoacceptanddecline.utils.PrefUtils;
 
 public class SettingsActivity extends AppCompatActivity {
 
     Context mContext;
+    ToggleButton autoAccept;
+    ToggleButton autoDecline;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,11 +36,21 @@ public class SettingsActivity extends AppCompatActivity {
 
         setUpToggleButtons();
 
+        findViewById(R.id.linear_layout_sign_out).setOnClickListener(view1 -> {
+            AuthenticationUtils.deauthenticate(mContext, isSuccess -> {
+                if (mContext != null) {
+                    ActivityUtils.startSignInActivityAndFinish(this);
+                }
+            });
+            autoAccept.setChecked(false);
+            autoDecline.setChecked(false);
+        });
+
     }
 
     public void setUpToggleButtons(){
-        ToggleButton autoAccept = findViewById(R.id.accept_toggle_button);
-        ToggleButton autoDecline = findViewById(R.id.decline_toggle_button);
+        autoAccept = findViewById(R.id.accept_toggle_button);
+        autoDecline = findViewById(R.id.decline_toggle_button);
         autoAccept.setChecked(PrefUtils.getAutoAccept(mContext));
         autoDecline.setChecked(PrefUtils.getAutoDecline(mContext));
         autoAccept.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

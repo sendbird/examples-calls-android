@@ -14,12 +14,21 @@ public class ActivityUtils {
 
     public static final int START_SIGN_IN_MANUALLY_ACTIVITY_REQUEST_CODE = 1;
 
-    public static void startSignInManuallyActivityForResult(@NonNull Activity activity) {
+    public static void startSignInActivityForResult(@NonNull Activity activity) {
         Log.i(BaseApplication.TAG, "[ActivityUtils] startSignInManuallyActivityAndFinish()");
 
         Intent intent = new Intent(activity, SignInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         activity.startActivityForResult(intent, START_SIGN_IN_MANUALLY_ACTIVITY_REQUEST_CODE);
+    }
+
+    public static void startSignInActivityAndFinish(@NonNull Activity activity) {
+        Log.i(BaseApplication.TAG, "[ActivityUtils] startAuthenticateActivityAndFinish()");
+
+        Intent intent = new Intent(activity, SignInActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        activity.startActivity(intent);
+        activity.finish();
     }
 
     public static void startMainActivityAndFinish(@NonNull Activity activity) {
