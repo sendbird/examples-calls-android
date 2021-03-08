@@ -24,60 +24,10 @@
         android:gravity="center_horizontal"
         tools:context="com.example.autoacceptanddecline.call.SettingsActivity">
 
-        <LinearLayout
-            android:id="@+id/linear_layout_auto_accept"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="16sp"
-                android:textColor="#e1000000"
-                android:lineSpacingExtra="8sp"
-                android:layout_marginLeft="16dp"
-                android:text="Auto accept calls" />
-
-            <ToggleButton
-                android:id="@+id/accept_toggle_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#1e000000" />
-
-        <LinearLayout
-            android:id="@+id/linear_layout_auto_decline"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="16sp"
-                android:textColor="#e1000000"
-                android:lineSpacingExtra="8sp"
-                android:layout_marginLeft="16dp"
-                android:text="Auto decline calls" />
-
-            <ToggleButton
-                android:id="@+id/decline_toggle_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
 
         <View
             android:layout_width="match_parent"

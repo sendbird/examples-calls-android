@@ -3,6 +3,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.sendbird.calls.SendBirdVideoView
+        android:id="@+id/video_view_fullscreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <View
+        android:id="@+id/view_connecting_video_view_fullscreen_fg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/calls_connecting_video_view_fullscreen_fg" />
+
+    <RelativeLayout
+        android:id="@+id/relative_layout_video_view_small"
+        android:layout_width="96dp"
+        android:layout_height="160dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp">
+
+        <com.sendbird.calls.SendBirdVideoView
+            android:id="@+id/video_view_small"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/calls_frame" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/image_view_camera_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/btn_camera_flip_and" />
+
     <LinearLayout
         android:id="@+id/linear_layout_info"
         android:layout_width="match_parent"
@@ -108,10 +146,10 @@
                 android:layout_alignParentLeft="true" />
 
             <ImageView
-                android:id="@+id/image_view_speakerphone"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:background="@drawable/selector_speakerphone_image_view"
+                android:id="@+id/image_view_video_off"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_video_image_view"
                 android:layout_centerHorizontal="true" />
 
             <ImageView

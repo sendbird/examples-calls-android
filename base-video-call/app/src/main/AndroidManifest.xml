@@ -22,7 +22,7 @@
         </activity>
         <activity android:name=".main.DialActivity"/>
         <activity
-            android:name=".call.CallActivity"
+            android:name=".call.VideoCallActivity"
             android:configChanges="orientation|smallestScreenSize|screenSize|screenLayout"
             android:theme="@style/CallTheme"
             android:screenOrientation="portrait"

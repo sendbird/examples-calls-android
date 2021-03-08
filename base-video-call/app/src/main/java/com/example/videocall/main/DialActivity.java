@@ -152,7 +152,7 @@ public class DialActivity extends AppCompatActivity {
         mImageViewVoiceCall.setOnClickListener(view1 -> {
             String calleeId = (mTextInputEditTextUserId.getText() != null ? mTextInputEditTextUserId.getText().toString() : "");
             if (!TextUtils.isEmpty(calleeId)) {
-                CallService.dial(mContext, calleeId);
+                CallService.dial(mContext, calleeId, true);
                 PrefUtils.setCalleeId(mContext, calleeId);
 
             }

@@ -34,6 +34,7 @@ public class CallService extends Service {
     public static final String EXTRA_REMOTE_NICKNAME_OR_USER_ID = "remote_nickname_or_user_id";
     public static final String EXTRA_CALL_STATE                 = "call_state";
     public static final String EXTRA_CALL_ID                    = "call_id";
+    public static final String EXTRA_IS_VIDEO_CALL              = "is_video_call";
     public static final String EXTRA_CALLEE_ID_TO_DIAL          = "callee_id_to_dial";
     public static final String EXTRA_DO_DIAL                    = "do_dial";
     public static final String EXTRA_DO_ACCEPT                  = "do_accept";
@@ -61,6 +62,7 @@ public class CallService extends Service {
         String calleeIdToDial;
         boolean doDial;
         boolean doAccept;
+        boolean doLocalVideoStart;
 
         ServiceData() {
         }
@@ -74,6 +76,7 @@ public class CallService extends Service {
             this.calleeIdToDial = serviceData.calleeIdToDial;
             this.doDial = serviceData.doDial;
             this.doAccept = serviceData.doAccept;
+            this.doLocalVideoStart = serviceData.doLocalVideoStart;
         }
     }
 
@@ -106,18 +109,13 @@ public class CallService extends Service {
         mServiceData.remoteNicknameOrUserId = intent.getStringExtra(EXTRA_REMOTE_NICKNAME_OR_USER_ID);
         mServiceData.callState = (CallActivity.STATE) intent.getSerializableExtra(EXTRA_CALL_STATE);
         mServiceData.callId = intent.getStringExtra(EXTRA_CALL_ID);
+        mServiceData.isVideoCall = intent.getBooleanExtra(EXTRA_IS_VIDEO_CALL, false);
         mServiceData.calleeIdToDial = intent.getStringExtra(EXTRA_CALLEE_ID_TO_DIAL);
         mServiceData.doDial = intent.getBooleanExtra(EXTRA_DO_DIAL, false);
         mServiceData.doAccept = intent.getBooleanExtra(EXTRA_DO_ACCEPT, false);
+        mServiceData.doLocalVideoStart = intent.getBooleanExtra(EXTRA_DO_LOCAL_VIDEO_START, false);
 
-        // if auto accept is set to true, automatically launch CallActivity and connect call
-
-        if(PrefUtils.getAutoAccept(mContext)){
-            Intent i = getCallActivityIntent(mContext, mServiceData, false);
-            startActivity(i);
-        }else{
-            updateNotification(mServiceData);
-        }
+        updateNotification(mServiceData);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -131,15 +129,16 @@ public class CallService extends Service {
     }
 
     private static Intent getCallActivityIntent(Context context, ServiceData serviceData, boolean doEnd) {
-        final Intent intent;
-
-        intent = new Intent(context, CallActivity.class);
+        final Intent intent = new Intent(context, VideoCallActivity.class);
 
         intent.putExtra(EXTRA_CALL_STATE, serviceData.callState);
         intent.putExtra(EXTRA_CALL_ID, serviceData.callId);
+        intent.putExtra(EXTRA_IS_VIDEO_CALL, serviceData.isVideoCall);
         intent.putExtra(EXTRA_CALLEE_ID_TO_DIAL, serviceData.calleeIdToDial);
         intent.putExtra(EXTRA_DO_DIAL, serviceData.doDial);
         intent.putExtra(EXTRA_DO_ACCEPT, serviceData.doAccept);
+        intent.putExtra(EXTRA_DO_LOCAL_VIDEO_START, serviceData.doLocalVideoStart);
+
         intent.putExtra(EXTRA_DO_END, doEnd);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
@@ -148,13 +147,15 @@ public class CallService extends Service {
 
     private Notification getNotification(@NonNull ServiceData serviceData) {
         final String content;
-            content = mContext.getString(R.string.calls_notification_voice_calling_content, mContext.getString(R.string.app_name));
+
+        content = mContext.getString(R.string.calls_notification_video_calling_content, mContext.getString(R.string.calls_application_name));
+
 
         final int currentTime = (int)System.currentTimeMillis();
         final String channelId = mContext.getPackageName() + currentTime;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelName = mContext.getString(R.string.app_name);
+            String channelName = mContext.getString(R.string.calls_application_name);
             NotificationChannel channel = new NotificationChannel(channelId, channelName,
                     serviceData.isHeadsUpNotification ? NotificationManager.IMPORTANCE_HIGH : NotificationManager.IMPORTANCE_LOW);
 
@@ -189,7 +190,7 @@ public class CallService extends Service {
         return builder.build();
     }
 
-    public static void dial(Context context, String doDialWithCalleeId) {
+    public static void dial(Context context, String doDialWithCalleeId, boolean isVideoCall) {
         if (SendBirdCall.getOngoingCallCount() > 0) {
             ToastUtils.showToast(context, "Ringing.");
             Log.i(BaseApplication.TAG, "[CallService] dial() => SendBirdCall.getOngoingCallCount(): " + SendBirdCall.getOngoingCallCount());
@@ -203,9 +204,11 @@ public class CallService extends Service {
         serviceData.remoteNicknameOrUserId = doDialWithCalleeId;
         serviceData.callState = CallActivity.STATE.STATE_OUTGOING;
         serviceData.callId = null;
+        serviceData.isVideoCall = isVideoCall;
         serviceData.calleeIdToDial = doDialWithCalleeId;
         serviceData.doDial = true;
         serviceData.doAccept = false;
+        serviceData.doLocalVideoStart = false;
 
         startService(context, serviceData);
 
@@ -224,6 +227,7 @@ public class CallService extends Service {
         serviceData.calleeIdToDial = null;
         serviceData.doDial = false;
         serviceData.doAccept = true;
+        serviceData.doLocalVideoStart = false;
 
         startService(context, serviceData);
     }
@@ -238,9 +242,11 @@ public class CallService extends Service {
             intent.putExtra(EXTRA_REMOTE_NICKNAME_OR_USER_ID, serviceData.remoteNicknameOrUserId);
             intent.putExtra(EXTRA_CALL_STATE, serviceData.callState);
             intent.putExtra(EXTRA_CALL_ID, serviceData.callId);
+            intent.putExtra(EXTRA_IS_VIDEO_CALL, serviceData.isVideoCall);
             intent.putExtra(EXTRA_CALLEE_ID_TO_DIAL, serviceData.calleeIdToDial);
             intent.putExtra(EXTRA_DO_DIAL, serviceData.doDial);
             intent.putExtra(EXTRA_DO_ACCEPT, serviceData.doAccept);
+            intent.putExtra(EXTRA_DO_LOCAL_VIDEO_START, serviceData.doLocalVideoStart);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(intent);
@@ -262,7 +268,7 @@ public class CallService extends Service {
     public void updateNotification(@NonNull ServiceData serviceData) {
         Log.i(BaseApplication.TAG, "[CallService] updateNotification(isHeadsUpNotification: " + serviceData.isHeadsUpNotification + ", remoteNicknameOrUserId: " + serviceData.remoteNicknameOrUserId
                 + ", callState: " + serviceData.callState + ", callId: " + serviceData.callId + ", isVideoCall: " + serviceData.isVideoCall
-                + ", calleeIdToDial: " + serviceData.calleeIdToDial + ", doDial: " + serviceData.doDial + ", doAccept: " + serviceData.doAccept + ")");
+                + ", calleeIdToDial: " + serviceData.calleeIdToDial + ", doDial: " + serviceData.doDial + ", doAccept: " + serviceData.doAccept + ", doLocalVideoStart: " + serviceData.doLocalVideoStart + ")");
 
         mServiceData.set(serviceData);
         startForeground(NOTIFICATION_ID, getNotification(mServiceData));

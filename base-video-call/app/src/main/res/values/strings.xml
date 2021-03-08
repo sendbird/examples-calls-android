@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Auto accept and decline</string>
+    <string name="app_name">Video Call Sample</string>
     <string name="calls_quickstart_version">Quickstart %s</string>
     <string name="calls_sdk_version">SDK %s</string>
     <string name="calls_sign_in_with_qrcode">Sign in with QR code</string>
@@ -16,13 +16,12 @@
     <string name="calls_user_id_format">User ID: %s</string>
     <string name="calls_and_character">" · "</string>
 
-    <string name="calls_notification_voice_calling_content">Voice call from %s</string>
     <string name="calls_notification_video_calling_content">Video call from %s</string>
     <string name="calls_notification_accept">Accept</string>
     <string name="calls_notification_decline">Decline</string>
     <string name="calls_notification_end">End</string>
 
-    <string name="calls_make_a_call">Make a call</string>
+    <string name="calls_make_a_video_call">Make a video call</string>
     <string name="calls_history">Recents</string>
     <string name="calls_no_call_history">No call history</string><!-- remove -->
     <string name="calls_settings">Settings</string>

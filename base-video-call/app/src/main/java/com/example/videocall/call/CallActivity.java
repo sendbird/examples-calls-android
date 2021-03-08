@@ -31,6 +31,7 @@ import com.sendbird.calls.AudioDevice;
 import com.sendbird.calls.CallOptions;
 import com.sendbird.calls.DialParams;
 import com.sendbird.calls.DirectCall;
+import com.sendbird.calls.DirectCallUser;
 import com.sendbird.calls.SendBirdCall;
 import com.sendbird.calls.handler.DirectCallListener;
 
@@ -38,7 +39,7 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class CallActivity extends AppCompatActivity {
+public abstract class CallActivity extends AppCompatActivity {
 
     static final int ENDING_TIME_MS = 1000;
 
@@ -82,13 +83,13 @@ public class CallActivity extends AppCompatActivity {
     ImageView mImageViewAudioOff;
     ImageView mImageViewBluetooth;
     ImageView mImageViewEnd;
-
-    private Timer mCallDurationTimer;
-
-    //+ Views
-    private ImageView mImageViewSpeakerphone;
     //- Views
-    //- Views
+
+    //+ abstract methods
+    protected abstract int getLayoutResourceId();
+    protected abstract void setAudioDevice(AudioDevice currentAudioDevice, Set<AudioDevice> availableAudioDevices);
+    protected abstract void startCall(boolean amICallee);
+    //- abstract methods
 
     //+ CallService
     private CallService mCallService;
@@ -105,7 +106,7 @@ public class CallActivity extends AppCompatActivity {
                 | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                 | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         getWindow().getDecorView().setSystemUiVisibility(getSystemUiVisibility());
-        setContentView(R.layout.activity_call);
+        setContentView(getLayoutResourceId());
 
         mContext = this;
 
@@ -114,12 +115,7 @@ public class CallActivity extends AppCompatActivity {
         init();
         initViews();
         setViews();
-
-        if (mDirectCall != null) {
-            AudioDevice currentAudioDevice = mDirectCall.getCurrentAudioDevice();
-            Set<AudioDevice> availableAudioDevices = mDirectCall.getAvailableAudioDevices();
-            setAudioDevice(currentAudioDevice, availableAudioDevices);
-        }
+        setAudioDevice();
         setCurrentState();
 
         if (mDoEnd) {
@@ -136,6 +132,7 @@ public class CallActivity extends AppCompatActivity {
 
         mState = (STATE) intent.getSerializableExtra(CallService.EXTRA_CALL_STATE);
         mCallId = intent.getStringExtra(CallService.EXTRA_CALL_ID);
+        mIsVideoCall = intent.getBooleanExtra(CallService.EXTRA_IS_VIDEO_CALL, false);
         mCalleeIdToDial = intent.getStringExtra(CallService.EXTRA_CALLEE_ID_TO_DIAL);
         mDoDial = intent.getBooleanExtra(CallService.EXTRA_DO_DIAL, false);
         mDoAccept = intent.getBooleanExtra(CallService.EXTRA_DO_ACCEPT, false);
@@ -170,7 +167,6 @@ public class CallActivity extends AppCompatActivity {
         mImageViewProfile = findViewById(R.id.image_view_profile);
         mTextViewUserId = findViewById(R.id.text_view_user_id);
         mTextViewStatus = findViewById(R.id.text_view_status);
-        mImageViewSpeakerphone = findViewById(R.id.image_view_speakerphone);
 
         mLinearLayoutRemoteMute = findViewById(R.id.linear_layout_remote_mute);
         mTextViewRemoteMute = findViewById(R.id.text_view_remote_mute);
@@ -220,29 +216,10 @@ public class CallActivity extends AppCompatActivity {
         });
     }
 
-    private void setAudioDevice(AudioDevice currentAudioDevice, Set<AudioDevice> availableAudioDevices) {
-            if (currentAudioDevice == AudioDevice.SPEAKERPHONE) {
-                mImageViewSpeakerphone.setSelected(true);
-                mImageViewBluetooth.setSelected(false);
-            } else if (currentAudioDevice == AudioDevice.BLUETOOTH) {
-                mImageViewSpeakerphone.setSelected(false);
-                mImageViewBluetooth.setSelected(true);
-            } else {
-                mImageViewSpeakerphone.setSelected(false);
-            }
-
-            if (availableAudioDevices.contains(AudioDevice.SPEAKERPHONE)) {
-                mImageViewSpeakerphone.setEnabled(true);
-            } else if (!mImageViewSpeakerphone.isSelected()) {
-                mImageViewSpeakerphone.setEnabled(false);
-            }
-
-            if (availableAudioDevices.contains(AudioDevice.BLUETOOTH)) {
-                mImageViewBluetooth.setEnabled(true);
-            } else if (!mImageViewBluetooth.isSelected()) {
-                mImageViewBluetooth.setEnabled(false);
-            }
-
+    private void setAudioDevice() {
+        if (mDirectCall != null) {
+            setAudioDevice(mDirectCall.getCurrentAudioDevice(), mDirectCall.getAvailableAudioDevices());
+        }
     }
 
     private void setCurrentState() {
@@ -275,7 +252,9 @@ public class CallActivity extends AppCompatActivity {
                 @Override
                 public void onLocalVideoSettingsChanged(DirectCall call) {
                     Log.i(BaseApplication.TAG, "[CallActivity] onLocalVideoSettingsChanged()");
-
+                    if (CallActivity.this instanceof VideoCallActivity) {
+                        ((VideoCallActivity) CallActivity.this).setLocalVideoSettings(call);
+                    }
                 }
 
                 @Override
@@ -290,35 +269,6 @@ public class CallActivity extends AppCompatActivity {
                     setAudioDevice(currentAudioDevice, availableAudioDevices);
                 }
             });
-        }
-    }
-
-    protected void startCall(boolean amICallee) {
-        CallOptions callOptions = new CallOptions();
-        callOptions.setAudioEnabled(mIsAudioEnabled);
-
-        if (amICallee) {
-            Log.i(BaseApplication.TAG, "[CallActivity] accept()");
-            if (mDirectCall != null) {
-                mDirectCall.accept(new AcceptParams().setCallOptions(callOptions));
-            }
-        } else {
-            Log.i(BaseApplication.TAG, "[CallActivity] dial()");
-            mDirectCall = SendBirdCall.dial(new DialParams(mCalleeIdToDial).setVideoCall(mIsVideoCall).setCallOptions(callOptions), (call, e) -> {
-                if (e != null) {
-                    Log.i(BaseApplication.TAG, "[CallActivity] dial() => e: " + e.getMessage());
-                    if (e.getMessage() != null) {
-                        ToastUtils.showToast(mContext, e.getMessage());
-                    }
-
-                    finishWithEnding(e.getMessage());
-                    return;
-                }
-
-                Log.i(BaseApplication.TAG, "[CallActivity] dial() => OK");
-                updateCallService();
-            });
-            setListener(mDirectCall);
         }
     }
 
@@ -375,7 +325,6 @@ public class CallActivity extends AppCompatActivity {
                 mImageViewDecline.setBackgroundResource(R.drawable.btn_call_decline);
 
                 setInfo(call, getString(R.string.calls_connecting_call));
-                cancelCallDurationTimer();
                 break;
             }
 
@@ -401,9 +350,6 @@ public class CallActivity extends AppCompatActivity {
                 mLinearLayoutConnectingButtons.setVisibility(View.VISIBLE);
 
                 setRemoteMuteInfo(call);
-                setInfo(call, "");
-                mLinearLayoutInfo.setVisibility(View.VISIBLE);
-                setCallDurationTimer(call);
                 break;
             }
 
@@ -434,7 +380,6 @@ public class CallActivity extends AppCompatActivity {
                     status = EndResultUtils.getEndResultString(mContext, call.getEndResult());
                 }
                 setInfo(call, status);
-                cancelCallDurationTimer();
                 finishWithEnding(status);
                 break;
             }
@@ -443,6 +388,8 @@ public class CallActivity extends AppCompatActivity {
     }
 
     protected void setInfo(DirectCall call, String status) {
+        DirectCallUser remoteUser = (call != null ? call.getRemoteUser() : null);
+
         mTextViewUserId.setText(getRemoteNicknameOrUserId(call));
         mTextViewStatus.setVisibility(View.VISIBLE);
         if (status != null) {
@@ -516,30 +463,8 @@ public class CallActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.i(BaseApplication.TAG, "[CallActivity] onDestroy()");
+
         unbindCallService();
-        cancelCallDurationTimer();
-    }
-
-    private void setCallDurationTimer(final DirectCall call) {
-        if (mCallDurationTimer == null) {
-            mCallDurationTimer = new Timer();
-            mCallDurationTimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    runOnUiThread(() -> {
-                        String callDuration = TimeUtils.getTimeString(call.getDuration());
-                        mTextViewStatus.setText(callDuration);
-                    });
-                }
-            }, 0, 1000);
-        }
-    }
-
-    private void cancelCallDurationTimer() {
-        if (mCallDurationTimer != null) {
-            mCallDurationTimer.cancel();
-            mCallDurationTimer = null;
-        }
     }
 
     //+ CallService
@@ -593,9 +518,11 @@ public class CallActivity extends AppCompatActivity {
             serviceData.remoteNicknameOrUserId = getRemoteNicknameOrUserId(mDirectCall);
             serviceData.callState = mState;
             serviceData.callId = (mDirectCall != null ? mDirectCall.getCallId() : mCallId);
+            serviceData.isVideoCall = mIsVideoCall;
             serviceData.calleeIdToDial = mCalleeIdToDial;
             serviceData.doDial = mDoDial;
             serviceData.doAccept = mDoAccept;
+            serviceData.doLocalVideoStart = mDoLocalVideoStart;
 
             mCallService.updateNotification(serviceData);
         }
