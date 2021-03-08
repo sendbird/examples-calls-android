@@ -20,7 +20,6 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.videocall.BaseApplication;
 import com.example.videocall.R;
-import com.example.videocall.utils.PrefUtils;
 import com.example.videocall.utils.ToastUtils;
 import com.example.videocall.utils.UserInfoUtils;
 import com.sendbird.calls.DirectCall;

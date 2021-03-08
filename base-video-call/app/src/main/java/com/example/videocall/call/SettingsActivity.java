@@ -2,10 +2,7 @@ package com.example.videocall.call;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.CompoundButton;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,7 +12,6 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.videocall.R;
 import com.example.videocall.utils.ActivityUtils;
 import com.example.videocall.utils.AuthenticationUtils;
-import com.example.videocall.utils.PrefUtils;
 
 public class SettingsActivity extends AppCompatActivity {
 
