@@ -1,12 +1,12 @@
-package com.example.autoacceptanddecline.fcm;
+package com.example.videocall.fcm;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.autoacceptanddecline.BaseApplication;
-import com.example.autoacceptanddecline.utils.PrefUtils;
-import com.example.autoacceptanddecline.utils.PushUtils;
+import com.example.videocall.BaseApplication;
+import com.example.videocall.utils.PrefUtils;
+import com.example.videocall.utils.PushUtils;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.sendbird.calls.SendBirdCall;
