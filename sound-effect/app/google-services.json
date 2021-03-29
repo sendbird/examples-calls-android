@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1031459481928",
+    "project_id": "sendbird-calls-sample-9ab04",
+    "storage_bucket": "sendbird-calls-sample-9ab04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031459481928:android:44777db00d3ea043652b7d",
+        "android_client_info": {
+          "package_name": "com.example.soundeffect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1031459481928-q9retpqi4sn5bun74jlfgn1v64ac1g6j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlo_ytwEgD_7AfvsS5TXJEPA0ZuNxzPPI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1031459481928-q9retpqi4sn5bun74jlfgn1v64ac1g6j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
