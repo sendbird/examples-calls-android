@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Video Call Sample</string>
+    <string name="app_name">Sound Effect Sample</string>
     <string name="calls_quickstart_version">Quickstart %s</string>
     <string name="calls_sdk_version">SDK %s</string>
     <string name="calls_sign_in_with_qrcode">Sign in with QR code</string>
