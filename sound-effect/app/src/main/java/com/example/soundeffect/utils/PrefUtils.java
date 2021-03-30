@@ -14,8 +14,10 @@ public class PrefUtils {
     private static final String PREF_KEY_ACCESS_TOKEN   = "access_token";
     private static final String PREF_KEY_CALLEE_ID      = "callee_id";
     private static final String PREF_KEY_PUSH_TOKEN     = "push_token";
-    private static final String PREF_KEY_AUTO_ACCEPT    = "auto_accept";
-    private static final String PREF_KEY_AUTO_DECLINE   = "auto_decline";
+    private static final String PREF_KEY_RECONNECTING    = "reconnecting";
+    private static final String PREF_KEY_RECONNECTED    = "reconnected";
+    private static final String PREF_KEY_RINGING   = "ringing";
+    private static final String PREF_KEY_DIALING   = "dialing";
 
 
     private static SharedPreferences getSharedPreferences(Context context) {
@@ -67,21 +69,40 @@ public class PrefUtils {
         return getSharedPreferences(context).getString(PREF_KEY_PUSH_TOKEN, "");
     }
 
-    public static void setAutoAccept(Context context, Boolean autoAccept){
+    public static void setReconnecting(Context context, Boolean reconnecting){
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putBoolean(PREF_KEY_AUTO_ACCEPT, autoAccept).apply();
+        editor.putBoolean(PREF_KEY_RECONNECTING, reconnecting).apply();
     }
 
-    public static boolean getAutoAccept(Context context) {
-        return getSharedPreferences(context).getBoolean(PREF_KEY_AUTO_ACCEPT, false);
+    public static boolean getReconnecting(Context context) {
+        return getSharedPreferences(context).getBoolean(PREF_KEY_RECONNECTING, false);
     }
 
-    public static void setAutoDecline(Context context, Boolean autoDecline){
+    public static void setReconnected(Context context, Boolean reconnected){
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putBoolean(PREF_KEY_AUTO_DECLINE, autoDecline).apply();
+        editor.putBoolean(PREF_KEY_RECONNECTED, reconnected).apply();
     }
 
-    public static boolean getAutoDecline(Context context) {
-        return getSharedPreferences(context).getBoolean(PREF_KEY_AUTO_DECLINE, false);
+    public static boolean getReconnected(Context context) {
+        return getSharedPreferences(context).getBoolean(PREF_KEY_RECONNECTED, false);
     }
+
+    public static boolean getRinging(Context context) {
+        return getSharedPreferences(context).getBoolean(PREF_KEY_RINGING, false);
+    }
+
+    public static void setRinging(Context context, Boolean ringing){
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putBoolean(PREF_KEY_RINGING, ringing).apply();
+    }
+
+    public static boolean getDialing(Context context) {
+        return getSharedPreferences(context).getBoolean(PREF_KEY_DIALING, false);
+    }
+
+    public static void setDialing(Context context, Boolean dialing){
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putBoolean(PREF_KEY_RINGING, dialing).apply();
+    }
+
 }

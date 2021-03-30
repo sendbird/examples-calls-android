@@ -35,6 +35,127 @@
             android:background="#1e000000" />
 
         <LinearLayout
+            android:id="@+id/linear_layout_dialing"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textColor="#e1000000"
+                android:lineSpacingExtra="8sp"
+                android:layout_marginLeft="16dp"
+                android:text="Dialing Sound" />
+
+            <ToggleButton
+                android:id="@+id/dialing_sound_toggle_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1e000000" />
+
+        <LinearLayout
+            android:id="@+id/linear_layout_reconnected"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textColor="#e1000000"
+                android:lineSpacingExtra="8sp"
+                android:layout_marginLeft="16dp"
+                android:text="Reconnected Sound" />
+
+            <ToggleButton
+                android:id="@+id/reconnected_sound_toggle_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1e000000" />
+
+        <LinearLayout
+            android:id="@+id/linear_layout_reconnecting"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textColor="#e1000000"
+                android:lineSpacingExtra="8sp"
+                android:layout_marginLeft="16dp"
+                android:text="Reconnecting Sound" />
+
+            <ToggleButton
+                android:id="@+id/reconnecting_sound_toggle_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1e000000" />
+
+        <LinearLayout
+            android:id="@+id/linear_layout_ringing"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textColor="#e1000000"
+                android:lineSpacingExtra="8sp"
+                android:layout_marginLeft="16dp"
+                android:text="Ringing Sound" />
+
+            <ToggleButton
+                android:id="@+id/ringing_sound_toggle_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1e000000" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1e000000" />
+
+        <LinearLayout
             android:id="@+id/linear_layout_sign_out"
             android:layout_width="match_parent"
             android:layout_height="55dp"

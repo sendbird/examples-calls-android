@@ -48,12 +48,6 @@ public class BaseApplication extends MultiDexApplication { // multidex
                     int ongoingCallCount = SendBirdCall.getOngoingCallCount();
                     Log.i(BaseApplication.TAG, "[BaseApplication] onRinging() => callId: " + call.getCallId() + ", getOngoingCallCount(): " + ongoingCallCount);
 
-                    if (ongoingCallCount >= 2 && PrefUtils.getAutoDecline(getApplicationContext())) {
-                        // if  Auto decline is set to true, automatically decline incoming call when user is already on call.
-                        call.end();
-                        return;
-                    }
-
                     call.setListener(new DirectCallListener() {
                         @Override
                         public void onConnected(DirectCall call) {
@@ -74,10 +68,10 @@ public class BaseApplication extends MultiDexApplication { // multidex
                 }
             });
 
-            SendBirdCall.Options.addDirectCallSound(SendBirdCall.SoundType.DIALING, R.raw.dialing);
-            SendBirdCall.Options.addDirectCallSound(SendBirdCall.SoundType.RINGING, R.raw.ringing);
-            SendBirdCall.Options.addDirectCallSound(SendBirdCall.SoundType.RECONNECTING, R.raw.reconnecting);
-            SendBirdCall.Options.addDirectCallSound(SendBirdCall.SoundType.RECONNECTED, R.raw.reconnected);
+//            SendBirdCall.Options.addDirectCallSound(SendBirdCall.SoundType.DIALING, R.raw.dialing);
+//            SendBirdCall.Options.addDirectCallSound(SendBirdCall.SoundType.RINGING, R.raw.ringing);
+//            SendBirdCall.Options.addDirectCallSound(SendBirdCall.SoundType.RECONNECTING, R.raw.reconnecting);
+//            SendBirdCall.Options.addDirectCallSound(SendBirdCall.SoundType.RECONNECTED, R.raw.reconnected);
             return true;
         }
         return false;
