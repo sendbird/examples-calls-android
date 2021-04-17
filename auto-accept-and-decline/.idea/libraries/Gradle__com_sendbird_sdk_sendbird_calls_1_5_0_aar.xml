@@ -5,6 +5,10 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b7997c54e411e1ea32446a3f040e664b/jetified-sendbird-calls-1.5.0/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b7997c54e411e1ea32446a3f040e664b/jetified-sendbird-calls-1.5.0/jars/libs/sendbird-calls-shadow.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b7997c54e411e1ea32446a3f040e664b/jetified-sendbird-calls-1.5.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7558e9ddb87a753e60b3e6242e9a4976/jetified-sendbird-calls-1.5.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7558e9ddb87a753e60b3e6242e9a4976/jetified-sendbird-calls-1.5.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7558e9ddb87a753e60b3e6242e9a4976/jetified-sendbird-calls-1.5.0/jars/libs/sendbird-calls-shadow.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7558e9ddb87a753e60b3e6242e9a4976/jetified-sendbird-calls-1.5.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
