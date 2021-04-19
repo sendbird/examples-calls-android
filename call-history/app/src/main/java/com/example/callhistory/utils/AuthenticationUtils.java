@@ -1,4 +1,4 @@
-package com.example.videocall.utils;
+package com.example.callhistory.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,8 +6,8 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
-import com.example.videocall.BaseApplication;
-import com.example.videocall.R;
+import com.example.callhistory.BaseApplication;
+import com.example.callhistory.R;
 import com.sendbird.calls.AuthenticateParams;
 import com.sendbird.calls.SendBirdCall;
 import com.sendbird.calls.SendBirdException;

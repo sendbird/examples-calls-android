@@ -1,4 +1,4 @@
-package com.example.videocall.call;
+package com.example.callhistory.call;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,9 +9,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.videocall.R;
-import com.example.videocall.utils.ActivityUtils;
-import com.example.videocall.utils.AuthenticationUtils;
+import com.example.callhistory.R;
+import com.example.callhistory.utils.ActivityUtils;
+import com.example.callhistory.utils.AuthenticationUtils;
 
 public class SettingsActivity extends AppCompatActivity {
 

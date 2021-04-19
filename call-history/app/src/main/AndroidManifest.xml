@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.videocall">
+    package="com.example.callhistory">
 
 
     <application
-        android:name=".BaseApplication"
+        android:name="com.example.callhistory.BaseApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignInActivity"
+        <activity android:name="com.example.callhistory.SignInActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
@@ -20,20 +20,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.DialActivity"/>
+        <activity android:name="com.example.callhistory.main.DialActivity"/>
+        <activity android:name=".main.CallHistoryActivity"/>
         <activity
-            android:name=".call.VideoCallActivity"
+            android:name="com.example.callhistory.call.VideoCallActivity"
             android:configChanges="orientation|smallestScreenSize|screenSize|screenLayout"
             android:theme="@style/CallTheme"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".call.SettingsActivity"/>
-        <service android:name=".call.CallService"
+        <activity android:name="com.example.callhistory.call.SettingsActivity"/>
+        <service android:name="com.example.callhistory.call.CallService"
             android:stopWithTask="false" />
 
         <!-- [Calls] FCM -->
         <service
-            android:name="com.example.videocall.fcm.MyFirebaseMessagingService"
+            android:name="com.example.callhistory.fcm.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

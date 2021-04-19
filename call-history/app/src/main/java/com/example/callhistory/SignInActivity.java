@@ -1,4 +1,4 @@
-package com.example.videocall;
+package com.example.callhistory;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,9 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.videocall.utils.ActivityUtils;
-import com.example.videocall.utils.AuthenticationUtils;
-import com.example.videocall.utils.PrefUtils;
+import com.example.callhistory.utils.ActivityUtils;
+import com.example.callhistory.utils.AuthenticationUtils;
+import com.example.callhistory.utils.PrefUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 

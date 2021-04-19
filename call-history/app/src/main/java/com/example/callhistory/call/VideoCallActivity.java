@@ -1,4 +1,4 @@
-package com.example.videocall.call;
+package com.example.callhistory.call;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.example.videocall.BaseApplication;
-import com.example.videocall.R;
-import com.example.videocall.utils.ToastUtils;
+import com.example.callhistory.BaseApplication;
+import com.example.callhistory.R;
+import com.example.callhistory.utils.ToastUtils;
 import com.sendbird.calls.AcceptParams;
 import com.sendbird.calls.AudioDevice;
 import com.sendbird.calls.CallOptions;

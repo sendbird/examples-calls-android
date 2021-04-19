@@ -1,4 +1,4 @@
-package com.example.videocall.utils;
+package com.example.callhistory.utils;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,9 +6,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.videocall.BaseApplication;
-import com.example.videocall.SignInActivity;
-import com.example.videocall.main.DialActivity;
+import com.example.callhistory.BaseApplication;
+import com.example.callhistory.SignInActivity;
+import com.example.callhistory.main.DialActivity;
 
 public class ActivityUtils {
 

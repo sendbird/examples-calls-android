@@ -1,4 +1,4 @@
-package com.example.videocall.utils;
+package com.example.callhistory.utils;
 
 
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 
-import com.example.videocall.BaseApplication;
+import com.example.callhistory.BaseApplication;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.sendbird.calls.SendBirdCall;
 import com.sendbird.calls.SendBirdException;

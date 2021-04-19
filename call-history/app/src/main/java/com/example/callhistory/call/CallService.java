@@ -1,4 +1,4 @@
-package com.example.videocall.call;
+package com.example.callhistory.call;
 
 
 import android.app.Notification;
@@ -18,10 +18,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import com.example.videocall.BaseApplication;
-import com.example.videocall.R;
-import com.example.videocall.utils.ToastUtils;
-import com.example.videocall.utils.UserInfoUtils;
+import com.example.callhistory.BaseApplication;
+import com.example.callhistory.R;
+import com.example.callhistory.utils.ToastUtils;
+import com.example.callhistory.utils.UserInfoUtils;
 import com.sendbird.calls.DirectCall;
 import com.sendbird.calls.SendBirdCall;
 

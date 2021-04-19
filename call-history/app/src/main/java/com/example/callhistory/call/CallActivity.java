@@ -1,4 +1,4 @@
-package com.example.videocall.call;
+package com.example.callhistory.call;
 
 
 import android.annotation.TargetApi;
@@ -19,17 +19,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.videocall.BaseApplication;
-import com.example.videocall.R;
-import com.example.videocall.utils.AuthenticationUtils;
-import com.example.videocall.utils.EndResultUtils;
-import com.example.videocall.utils.TimeUtils;
-import com.example.videocall.utils.ToastUtils;
-import com.example.videocall.utils.UserInfoUtils;
-import com.sendbird.calls.AcceptParams;
+import com.example.callhistory.BaseApplication;
+import com.example.callhistory.R;
+import com.example.callhistory.utils.AuthenticationUtils;
+import com.example.callhistory.utils.EndResultUtils;
+import com.example.callhistory.utils.UserInfoUtils;
 import com.sendbird.calls.AudioDevice;
-import com.sendbird.calls.CallOptions;
-import com.sendbird.calls.DialParams;
 import com.sendbird.calls.DirectCall;
 import com.sendbird.calls.DirectCallUser;
 import com.sendbird.calls.SendBirdCall;

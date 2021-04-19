@@ -1,4 +1,4 @@
-package com.example.videocall.main;
+package com.example.callhistory.main;
 
 import android.Manifest;
 import android.content.Context;
@@ -20,12 +20,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.videocall.BaseApplication;
-import com.example.videocall.R;
-import com.example.videocall.call.CallService;
-import com.example.videocall.call.SettingsActivity;
-import com.example.videocall.utils.PrefUtils;
-import com.example.videocall.utils.ToastUtils;
+import com.example.callhistory.BaseApplication;
+import com.example.callhistory.R;
+import com.example.callhistory.call.CallService;
+import com.example.callhistory.call.SettingsActivity;
+import com.example.callhistory.utils.PrefUtils;
+import com.example.callhistory.utils.ToastUtils;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -82,9 +82,15 @@ public class DialActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.action_call_history:
+                intent = new Intent(this, CallHistoryActivity.class);
                 startActivity(intent);
                 return true;
 

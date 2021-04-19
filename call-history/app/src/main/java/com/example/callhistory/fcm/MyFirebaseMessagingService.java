@@ -1,12 +1,12 @@
-package com.example.videocall.fcm;
+package com.example.callhistory.fcm;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.videocall.BaseApplication;
-import com.example.videocall.utils.PrefUtils;
-import com.example.videocall.utils.PushUtils;
+import com.example.callhistory.BaseApplication;
+import com.example.callhistory.utils.PrefUtils;
+import com.example.callhistory.utils.PushUtils;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.sendbird.calls.SendBirdCall;

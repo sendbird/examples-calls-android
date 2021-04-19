@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="com.example.videocall.main.DialActivity">
+    tools:context="com.example.callhistory.main.DialActivity">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:fontFamily="@font/roboto_medium"
-            android:text="@string/calls_make_a_call"
+            android:text="@string/calls_make_a_video_call"
             android:textColor="#e1000000"
             android:textSize="24sp"
             android:layout_marginBottom="32dp" />

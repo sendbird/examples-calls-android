@@ -1,8 +1,8 @@
-package com.example.videocall.utils;
+package com.example.callhistory.utils;
 
 import android.content.Context;
 
-import com.example.videocall.R;
+import com.example.callhistory.R;
 import com.sendbird.calls.DirectCallEndResult;
 
 public class EndResultUtils {

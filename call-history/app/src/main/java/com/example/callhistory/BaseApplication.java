@@ -1,4 +1,4 @@
-package com.example.videocall;
+package com.example.callhistory;
 
 
 import android.content.Context;
@@ -7,8 +7,9 @@ import android.util.Log;
 
 import androidx.multidex.MultiDexApplication;
 
-import com.example.videocall.call.CallService;
-import com.example.videocall.utils.PrefUtils;
+import com.example.callhistory.call.CallService;
+import com.example.callhistory.utils.BroadcastUtils;
+import com.example.callhistory.utils.PrefUtils;
 import com.sendbird.calls.DirectCall;
 import com.sendbird.calls.SendBirdCall;
 import com.sendbird.calls.handler.DirectCallListener;
@@ -63,6 +64,8 @@ public class BaseApplication extends MultiDexApplication { // multidex
                         public void onEnded(DirectCall call) {
                             int ongoingCallCount = SendBirdCall.getOngoingCallCount();
                             Log.i(BaseApplication.TAG, "[BaseApplication] onEnded() => callId: " + call.getCallId() + ", getOngoingCallCount(): " + ongoingCallCount);
+
+                            BroadcastUtils.sendCallLogBroadcast(context, call.getCallLog());
 
                             if (ongoingCallCount == 0) {
                                 CallService.stopService(context);

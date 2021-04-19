@@ -1,9 +1,9 @@
-package com.example.videocall.utils;
+package com.example.callhistory.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.videocall.BaseApplication;
+import com.example.callhistory.BaseApplication;
 
 public class PrefUtils {
 

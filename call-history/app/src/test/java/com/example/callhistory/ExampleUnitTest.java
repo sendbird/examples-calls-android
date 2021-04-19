@@ -1,4 +1,4 @@
-package com.example.videocall;
+package com.example.callhistory;
 
 import org.junit.Test;
 

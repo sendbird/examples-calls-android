@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Video Call Sample</string>
+    <string name="app_name">Call History Sample</string>
     <string name="calls_quickstart_version">Quickstart %s</string>
     <string name="calls_sdk_version">SDK %s</string>
     <string name="calls_sign_in_with_qrcode">Sign in with QR code</string>
@@ -55,5 +55,6 @@
     <string name="calls_invalid_deep_link">Invalid deep link</string>
     <string name="calls_deep_linking_to_authenticate_failed">Could not authenticate deep link.</string>
     <string name="settings">settings</string>
+    <string name="call_history">call history</string>
 
 </resources>
