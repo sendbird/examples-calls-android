@@ -170,12 +170,28 @@ public class CallService extends Service {
         Intent endIntent = getCallActivityIntent(mContext, serviceData, true);
         PendingIntent endPendingIntent = PendingIntent.getActivity(mContext, (currentTime + 2), endIntent, 0);
 
+        Intent fullScreenIntent = new Intent(mContext, IncomingCallActivity.class);
+
+        fullScreenIntent.putExtra(EXTRA_REMOTE_NICKNAME_OR_USER_ID, serviceData.remoteNicknameOrUserId);
+        fullScreenIntent.putExtra(EXTRA_CALL_STATE, serviceData.callState);
+        fullScreenIntent.putExtra(EXTRA_CALL_ID, serviceData.callId);
+        fullScreenIntent.putExtra(EXTRA_IS_VIDEO_CALL, serviceData.isVideoCall);
+        fullScreenIntent.putExtra(EXTRA_CALLEE_ID_TO_DIAL, serviceData.calleeIdToDial);
+        fullScreenIntent.putExtra(EXTRA_DO_DIAL, serviceData.doDial);
+        fullScreenIntent.putExtra(EXTRA_DO_ACCEPT, serviceData.doAccept);
+        fullScreenIntent.putExtra(EXTRA_DO_LOCAL_VIDEO_START, serviceData.doLocalVideoStart);
+
+        fullScreenIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(mContext, (currentTime + 2), fullScreenIntent, 0);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext, channelId);
         builder.setContentTitle(serviceData.remoteNicknameOrUserId)
                 .setContentText(content)
                 .setSmallIcon(R.drawable.ic_sendbird)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.icon_push_oreo))
-                .setPriority(serviceData.isHeadsUpNotification ? NotificationCompat.PRIORITY_HIGH : NotificationCompat.PRIORITY_LOW);
+                .setPriority(serviceData.isHeadsUpNotification ? NotificationCompat.PRIORITY_HIGH : NotificationCompat.PRIORITY_LOW)
+                .setFullScreenIntent(fullScreenPendingIntent, true)
+                .setContentIntent(fullScreenPendingIntent);
 
         if (SendBirdCall.getOngoingCallCount() > 0) {
             if (serviceData.doAccept) {

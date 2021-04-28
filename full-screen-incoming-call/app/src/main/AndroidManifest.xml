@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.fullscreenincomingcall">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:name="com.example.fullscreenincomingcall.BaseApplication"
@@ -21,6 +24,13 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.fullscreenincomingcall.main.DialActivity"/>
+        <activity android:name=".call.IncomingCallActivity"
+            android:showOnLockScreen="true"
+            android:showWhenLocked="true">
+            <intent-filter>
+                <action android:name="endIncomingCallActivity"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.example.fullscreenincomingcall.call.VideoCallActivity"
             android:configChanges="orientation|smallestScreenSize|screenSize|screenLayout"

@@ -2,6 +2,7 @@ package com.example.fullscreenincomingcall;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -66,6 +67,7 @@ public class BaseApplication extends MultiDexApplication { // multidex
 
                             if (ongoingCallCount == 0) {
                                 CallService.stopService(context);
+                                sendBroadcast(new Intent("endIncomingCallActivity"));
                             }
                         }
                     });
