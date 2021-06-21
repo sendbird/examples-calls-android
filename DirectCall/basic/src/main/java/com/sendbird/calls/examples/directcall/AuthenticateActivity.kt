@@ -20,7 +20,7 @@ class AuthenticateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authenticate)
         applicationIdEt = findViewById<EditText>(R.id.et_application_id).apply { setText(DEFAULT_APP_ID) }
-        userIdEt = findViewById<EditText>(R.id.et_user_id)
+        userIdEt = findViewById(R.id.et_user_id)
         findViewById<Button>(R.id.btn_sign_in).setOnClickListener(this::onSignInButtonClicked)
     }
 
@@ -46,7 +46,9 @@ class AuthenticateActivity : AppCompatActivity() {
                     return
                 }
 
-                val intent = Intent(applicationContext, MainActivity::class.java)
+                val intent = Intent(applicationContext, MainActivity::class.java).apply {
+                    putExtra(MainActivity.INTENT_EXTRA_ENTRY_FRAGMENT_TYPE, MainActivity.FragmentType.DIAL)
+                }
                 startActivity(intent)
                 finish()
             }
