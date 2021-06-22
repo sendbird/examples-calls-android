@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DialFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".DialFragment"
+    android:padding="15dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RadioGroup
+        android:id="@+id/dial_radio_group_call_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:checkedButton="@id/dial_radio_button_audio"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <RadioButton
+            android:id="@+id/dial_radio_button_audio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="audio"
+            android:layout_marginEnd="10dp"/>
+
+        <RadioButton
+            android:id="@+id/dial_radio_button_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="video" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/dial_edit_text_user_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="User ID"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        app:layout_constraintTop_toTopOf="@id/dial_radio_group_call_type"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/dial_radio_group_call_type"
+        app:layout_constraintEnd_toStartOf="@id/dial_radio_group_call_type" />
+
+    <Button
+        android:id="@+id/dial_button_dial"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="dial fragment" />
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/dial_radio_group_call_type"
+        android:text="dial"/>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
