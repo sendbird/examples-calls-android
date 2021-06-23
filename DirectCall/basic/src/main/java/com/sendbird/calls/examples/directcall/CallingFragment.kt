@@ -13,10 +13,7 @@ import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.button.MaterialButton
-import com.sendbird.calls.DirectCall
-import com.sendbird.calls.DirectCallUserRole
-import com.sendbird.calls.SendBirdCall
-import com.sendbird.calls.SendBirdVideoView
+import com.sendbird.calls.*
 import com.sendbird.calls.handler.DirectCallListener
 import java.util.*
 
@@ -59,6 +56,10 @@ class CallingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (directCall == null) {
+            return
+        }
+
         statusTextView = view.findViewById(R.id.calling_textview_status)
         callTypeTextView = view.findViewById(R.id.calling_textview_call_type)
         myRoleTextView = view.findViewById(R.id.calling_textview_my_role)
@@ -89,6 +90,12 @@ class CallingFragment : Fragment() {
         } else {
             directCall.setLocalVideoView(localVideoView)
             directCall.setRemoteVideoView(remoteVideoView)
+        }
+
+        if (args.isAccepted) {
+            directCall.accept(AcceptParams())
+        } else if (args.isDeclined) {
+            directCall.end()
         }
     }
 

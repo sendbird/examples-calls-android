@@ -23,6 +23,14 @@
         <argument
             android:name="callId"
             app:argType="string" />
+        <argument
+            android:name="isAccepted"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="isDeclined"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 
 </navigation>

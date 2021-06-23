@@ -19,9 +19,22 @@ class AuthenticateActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authenticate)
-        applicationIdEt = findViewById<EditText>(R.id.et_application_id).apply { setText(DEFAULT_APP_ID) }
+        applicationIdEt = findViewById<EditText>(R.id.et_application_id).apply { setText(BaseApplication.APP_ID) }
         userIdEt = findViewById(R.id.et_user_id)
         findViewById<Button>(R.id.btn_sign_in).setOnClickListener(this::onSignInButtonClicked)
+        authenticateAutomatically()
+    }
+
+    private fun authenticateAutomatically() {
+        SharedPreferencesManager.userId?.let {
+            SendBirdCall.authenticate(AuthenticateParams(it), object : AuthenticateHandler {
+                override fun onResult(user: User?, e: SendBirdException?) {
+                    if (e == null) {
+                        goToMainActivity()
+                    }
+                }
+            })
+        }
     }
 
     private fun onSignInButtonClicked(view: View) {
@@ -46,16 +59,16 @@ class AuthenticateActivity : AppCompatActivity() {
                     return
                 }
 
-                val intent = Intent(applicationContext, MainActivity::class.java).apply {
-                    putExtra(MainActivity.INTENT_EXTRA_ENTRY_FRAGMENT_TYPE, MainActivity.FragmentType.DIAL)
-                }
-                startActivity(intent)
-                finish()
+                SharedPreferencesManager.userId = userId
+                goToMainActivity()
             }
         })
     }
 
-    companion object {
-        private const val DEFAULT_APP_ID = "773D12BD-8A51-4DB6-AF33-F59D189F006C"
+    private fun goToMainActivity() {
+        FcmTokenManager.refreshToken()
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

@@ -35,18 +35,18 @@ class DialFragment : Fragment() {
         view.findViewById<Button>(R.id.dial_button_dial).setOnClickListener(this::onDialButtonClicked)
         userIdEditText = view.findViewById(R.id.dial_edit_text_user_id)
         radioGroup = view.findViewById(R.id.dial_radio_group_call_type)
-    }
+        val callId = activity?.intent?.extras?.getString(MainActivity.INTENT_EXTRA_CALL_ID)
+        val isAccepted = activity?.intent?.extras?.getBoolean(MainActivity.INTENT_EXTRA_IS_ACCEPTED, false) ?: false
+        val isDeclined = activity?.intent?.extras?.getBoolean(MainActivity.INTENT_EXTRA_IS_DECLINED, false) ?: false
 
-    override fun onStart() {
-        super.onStart()
-        Log.d(TAG, "onStart() called")
-        SendBirdCall.addListener(TAG, sendbirdCallListener)
-    }
 
-    override fun onStop() {
-        super.onStop()
-        Log.d(TAG, "onStop() called")
-        SendBirdCall.removeListener(TAG)
+        if (callId != null) {
+            SendBirdCall.getCall(callId)?.let {
+                if (it.isOngoing) {
+                    navigateToCallingFragment(callId, isAccepted, isDeclined)
+                }
+            }
+        }
     }
 
     private fun onDialButtonClicked(view: View) {
@@ -58,23 +58,19 @@ class DialFragment : Fragment() {
         val isVideoCall = radioGroup.checkedRadioButtonId == R.id.dial_radio_button_video
         SendBirdCall.dial(DialParams(userId).setVideoCall(isVideoCall), object : DialHandler {
             override fun onResult(call: DirectCall?, e: SendBirdException?) {
-                call?.callId?.let {
-                    val action = DialFragmentDirections.actionDialFragmentToCallingFragment(it)
-                    findNavController().navigate(action)
-                }
+                call?.callId?.let { navigateToCallingFragment(it) }
                 e?.let { context?.showToast(it.message ?: it.toString()) }
             }
         })
     }
 
-    private val sendbirdCallListener = object : SendBirdCallListener() {
-        override fun onRinging(call: DirectCall) {
-            Log.d(TAG, "onRinging() called with: call = $call")
-            call.callId?.let {
-                val action = DialFragmentDirections.actionDialFragmentToCallingFragment(it)
-                findNavController().navigate(action)
-            }
-        }
+    private fun navigateToCallingFragment(
+        callId: String,
+        isAccepted: Boolean = false,
+        isDeclined: Boolean = false
+    ) {
+        val action = DialFragmentDirections.actionDialFragmentToCallingFragment(callId, isAccepted, isDeclined)
+        findNavController().navigate(action)
     }
 
     companion object {
