@@ -15,11 +15,20 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.sendbird.calls.*
 import com.sendbird.calls.handler.AuthenticateHandler
+import com.sendbird.calls.handler.DirectCallListener
 import com.sendbird.calls.handler.SendBirdCallListener
 
 class CallsFirebaseMessagingService: FirebaseMessagingService() {
     init {
         SendBirdCall.addListener(TAG, object : SendBirdCallListener() {
+            private val callListener = object : DirectCallListener() {
+                override fun onConnected(call: DirectCall) {}
+
+                override fun onEnded(call: DirectCall) {
+                    val notificationManager = application.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                    notificationManager.cancel(NOTIFICATION_ID)
+                }
+            }
             override fun onRinging(call: DirectCall) {
                 val userId = SharedPreferencesManager.userId ?: return
                 if (SendBirdCall.currentUser == null) {
@@ -31,6 +40,7 @@ class CallsFirebaseMessagingService: FirebaseMessagingService() {
                 } else {
                     showNotification(call)
                 }
+                call.setListener(callListener)
             }
         })
     }
