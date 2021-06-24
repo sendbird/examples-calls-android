@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "209706026342",
+    "project_id": "calls-example-directcall",
+    "storage_bucket": "calls-example-directcall.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209706026342:android:60048465d574aeca0d74a7",
+        "android_client_info": {
+          "package_name": "com.sendbird.calls.examples.directcall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "209706026342-8kcjqdvej65h7ha274u6e10uv564ojc8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVNlGcKV3YvaERxrKLywWdwRqicGHY6b4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "209706026342-8kcjqdvej65h7ha274u6e10uv564ojc8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
