@@ -3,7 +3,6 @@ package com.sendbird.calls.examples.directcall
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +11,12 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.button.MaterialButton
 import com.sendbird.calls.*
 import com.sendbird.calls.handler.DirectCallListener
 import java.util.*
 
-class CallingFragment : Fragment() {
-    private val args: CallingFragmentArgs by navArgs()
+class CallFragment : Fragment() {
+    private val args: CallFragmentArgs by navArgs()
     lateinit var directCall: DirectCall
     lateinit var statusTextView: TextView
     lateinit var callTypeTextView: TextView
@@ -51,7 +49,7 @@ class CallingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calling, container, false)
+        return inflater.inflate(R.layout.fragment_call, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,14 +58,14 @@ class CallingFragment : Fragment() {
             return
         }
 
-        statusTextView = view.findViewById(R.id.calling_textview_status)
-        callTypeTextView = view.findViewById(R.id.calling_textview_call_type)
-        myRoleTextView = view.findViewById(R.id.calling_textview_my_role)
-        remoteUserIdTextView = view.findViewById(R.id.calling_textview_remote_user_id)
-        endButton = view.findViewById(R.id.calling_button_end)
-        localVideoView = view.findViewById(R.id.calling_local_video_view)
-        remoteVideoView = view.findViewById(R.id.calling_remote_video_view)
-        durationTextView = view.findViewById(R.id.calling_textview_duration)
+        statusTextView = view.findViewById(R.id.call_textview_status)
+        callTypeTextView = view.findViewById(R.id.call_textview_call_type)
+        myRoleTextView = view.findViewById(R.id.call_textview_my_role)
+        remoteUserIdTextView = view.findViewById(R.id.call_textview_remote_user_id)
+        endButton = view.findViewById(R.id.call_button_end)
+        localVideoView = view.findViewById(R.id.call_local_video_view)
+        remoteVideoView = view.findViewById(R.id.call_remote_video_view)
+        durationTextView = view.findViewById(R.id.call_textview_duration)
 
         statusTextView.text = if (directCall.myRole == DirectCallUserRole.CALLER ) {
             CallStatus.DIALING.toString()
@@ -93,7 +91,14 @@ class CallingFragment : Fragment() {
         }
 
         if (args.isAccepted) {
-            directCall.accept(AcceptParams())
+            directCall.accept(
+                AcceptParams()
+                    .setCallOptions(
+                        CallOptions()
+                            .setRemoteVideoView(remoteVideoView)
+                            .setLocalVideoView(localVideoView)
+                    )
+            )
         } else if (args.isDeclined) {
             directCall.end()
         }

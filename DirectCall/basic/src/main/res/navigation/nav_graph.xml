@@ -12,14 +12,14 @@
         android:label="fragment_dial"
         tools:layout="@layout/fragment_dial" >
         <action
-            android:id="@+id/action_dialFragment_to_callingFragment"
-            app:destination="@id/callingFragment" />
+            android:id="@+id/action_dialFragment_to_callFragment"
+            app:destination="@id/callFragment" />
     </fragment>
     <fragment
-        android:id="@+id/callingFragment"
-        android:name="com.sendbird.calls.examples.directcall.CallingFragment"
-        android:label="fragment_calling"
-        tools:layout="@layout/fragment_calling" >
+        android:id="@+id/callFragment"
+        android:name="com.sendbird.calls.examples.directcall.CallFragment"
+        android:label="fragment_call"
+        tools:layout="@layout/fragment_call" >
         <argument
             android:name="callId"
             app:argType="string" />
