@@ -2,14 +2,12 @@ package com.sendbird.calls.examples.directcall
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.navigation.fragment.findNavController
 import com.sendbird.calls.DialParams
@@ -18,7 +16,6 @@ import com.sendbird.calls.SendBirdCall
 import com.sendbird.calls.SendBirdException
 import com.sendbird.calls.handler.CompletionHandler
 import com.sendbird.calls.handler.DialHandler
-import com.sendbird.calls.handler.SendBirdCallListener
 
 class DialFragment : Fragment() {
     lateinit var userIdEditText: EditText
@@ -46,7 +43,7 @@ class DialFragment : Fragment() {
         if (callId != null) {
             SendBirdCall.getCall(callId)?.let {
                 if (it.isOngoing) {
-                    navigateToCallingFragment(callId, isAccepted, isDeclined)
+                    navigateToCallFragment(callId, isAccepted, isDeclined)
                 }
             }
         }
@@ -61,7 +58,7 @@ class DialFragment : Fragment() {
         val isVideoCall = radioGroup.checkedRadioButtonId == R.id.dial_radio_button_video
         SendBirdCall.dial(DialParams(userId).setVideoCall(isVideoCall), object : DialHandler {
             override fun onResult(call: DirectCall?, e: SendBirdException?) {
-                call?.callId?.let { navigateToCallingFragment(it) }
+                call?.callId?.let { navigateToCallFragment(it) }
                 e?.let { context?.showToast(it.message ?: it.toString()) }
             }
         })
@@ -99,12 +96,12 @@ class DialFragment : Fragment() {
         }
     }
 
-    private fun navigateToCallingFragment(
+    private fun navigateToCallFragment(
         callId: String,
         isAccepted: Boolean = false,
         isDeclined: Boolean = false
     ) {
-        val action = DialFragmentDirections.actionDialFragmentToCallingFragment(callId, isAccepted, isDeclined)
+        val action = DialFragmentDirections.actionDialFragmentToCallFragment(callId, isAccepted, isDeclined)
         findNavController().navigate(action)
     }
 
