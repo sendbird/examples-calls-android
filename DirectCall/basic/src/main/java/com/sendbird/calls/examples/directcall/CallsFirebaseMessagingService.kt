@@ -3,6 +3,7 @@ package com.sendbird.calls.examples.directcall
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_DEFAULT
+import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -54,7 +55,7 @@ class CallsFirebaseMessagingService: FirebaseMessagingService() {
             val name = "SendBirdCalls"
             val descriptionText = "Notification for the incoming calls."
 
-            val importance = IMPORTANCE_DEFAULT
+            val importance = IMPORTANCE_HIGH
 
             //define your own channel code here i used a predefined constant
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {

@@ -41,12 +41,24 @@
         app:layout_constraintBottom_toBottomOf="@id/dial_radio_group_call_type"
         app:layout_constraintEnd_toStartOf="@id/dial_radio_group_call_type" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/dial_button_dial"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_marginTop="10dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         app:layout_constraintTop_toBottomOf="@id/dial_radio_group_call_type"
         android:text="dial"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dial_button_sign_out"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Sign out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

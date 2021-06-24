@@ -1,5 +1,6 @@
 package com.sendbird.calls.examples.directcall
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import com.sendbird.calls.DialParams
 import com.sendbird.calls.DirectCall
 import com.sendbird.calls.SendBirdCall
 import com.sendbird.calls.SendBirdException
+import com.sendbird.calls.handler.CompletionHandler
 import com.sendbird.calls.handler.DialHandler
 import com.sendbird.calls.handler.SendBirdCallListener
 
@@ -33,6 +35,7 @@ class DialFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<Button>(R.id.dial_button_dial).setOnClickListener(this::onDialButtonClicked)
+        view.findViewById<Button>(R.id.dial_button_sign_out).setOnClickListener(this::onSignOutButtonClicked)
         userIdEditText = view.findViewById(R.id.dial_edit_text_user_id)
         radioGroup = view.findViewById(R.id.dial_radio_group_call_type)
         val callId = activity?.intent?.extras?.getString(MainActivity.INTENT_EXTRA_CALL_ID)
@@ -62,6 +65,38 @@ class DialFragment : Fragment() {
                 e?.let { context?.showToast(it.message ?: it.toString()) }
             }
         })
+    }
+
+    private fun onSignOutButtonClicked(view: View) {
+        if (SendBirdCall.currentUser == null) {
+            activity?.showToast("Not authenticated yet.")
+            return
+        }
+
+        val token = SharedPreferencesManager.token
+        SharedPreferencesManager.token = null
+        SharedPreferencesManager.userId = null
+        SharedPreferencesManager.registeredToken = null
+
+        val signOut = {
+            SendBirdCall.deauthenticate(object : CompletionHandler {
+                override fun onResult(e: SendBirdException?) {
+                    val intent = Intent(context, AuthenticateActivity::class.java)
+                    startActivity(intent)
+                    activity?.finish()
+                }
+            })
+        }
+
+        if (token != null) {
+            SendBirdCall.unregisterPushToken(token, object : CompletionHandler {
+                override fun onResult(e: SendBirdException?) {
+                    signOut.invoke()
+                }
+            })
+        } else {
+            signOut.invoke()
+        }
     }
 
     private fun navigateToCallingFragment(

@@ -74,13 +74,15 @@
         app:layout_constraintTop_toBottomOf="@id/et_application_id"
         android:inputType="text"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_sign_in"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="40dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginTop="20dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:padding="0dp"
         android:text="Sign in"
         app:layout_constraintTop_toBottomOf="@id/et_user_id"
