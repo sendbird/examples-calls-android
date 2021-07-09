@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.sendbird.calls.*
 import com.sendbird.calls.handler.DirectCallListener
+import org.webrtc.RendererCommon
 import java.util.*
 
 class CallFragment : Fragment() {
@@ -65,6 +66,7 @@ class CallFragment : Fragment() {
         endButton = view.findViewById(R.id.call_button_end)
         localVideoView = view.findViewById(R.id.call_local_video_view)
         remoteVideoView = view.findViewById(R.id.call_remote_video_view)
+        remoteVideoView.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FIT)
         durationTextView = view.findViewById(R.id.call_textview_duration)
 
         statusTextView.text = if (directCall.myRole == DirectCallUserRole.CALLER ) {

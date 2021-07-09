@@ -117,13 +117,18 @@
             android:text="end"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <com.sendbird.calls.SendBirdVideoView
-            android:id="@+id/call_remote_video_view"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/call_button_end"
-            android:elevation="1dp"/>
+            android:elevation="1dp">
+            <com.sendbird.calls.SendBirdVideoView
+                android:id="@+id/call_remote_video_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"/>
+        </FrameLayout>
 
         <com.sendbird.calls.SendBirdVideoView
             android:id="@+id/call_local_video_view"
