@@ -1,5 +1,9 @@
-package com.sendbird.calls.examples.directcall
+package com.sendbird.calls.examples.directcall.screenshare
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.media.projection.MediaProjectionManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,6 +16,7 @@ import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.sendbird.calls.*
+import com.sendbird.calls.handler.CompletionHandler
 import com.sendbird.calls.handler.DirectCallListener
 import org.webrtc.RendererCommon
 import java.util.*
@@ -27,6 +32,8 @@ class CallFragment : Fragment() {
     lateinit var endButton: Button
     lateinit var localVideoView: SendBirdVideoView
     lateinit var remoteVideoView: SendBirdVideoView
+    lateinit var screenShareButton: Button
+    lateinit var mpm: MediaProjectionManager
 
     enum class CallStatus {
         DIALING, RINGING, CONNECTING, CONNECTED, RECONNECTING, ENDED
@@ -43,6 +50,7 @@ class CallFragment : Fragment() {
         }
 
         directCall = call.apply { setListener(directCallListener) }
+        mpm = requireContext().getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
     }
 
     override fun onCreateView(
@@ -68,6 +76,7 @@ class CallFragment : Fragment() {
         remoteVideoView = view.findViewById(R.id.call_remote_video_view)
         remoteVideoView.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FIT)
         durationTextView = view.findViewById(R.id.call_textview_duration)
+        screenShareButton = view.findViewById(R.id.call_button_screen_share)
 
         statusTextView.text = if (directCall.myRole == DirectCallUserRole.CALLER ) {
             CallStatus.DIALING.toString()
@@ -84,6 +93,7 @@ class CallFragment : Fragment() {
         myRoleTextView.text = directCall.myRole?.toString()
         remoteUserIdTextView.text = directCall.remoteUser?.userId
         endButton.setOnClickListener(this::onEndButtonClicked)
+        screenShareButton.setOnClickListener(this::onScreenShareButtonClicked)
         if (!directCall.isVideoCall) {
             localVideoView.visibility = View.INVISIBLE
             remoteVideoView.visibility = View.INVISIBLE
@@ -108,6 +118,39 @@ class CallFragment : Fragment() {
 
     private fun onEndButtonClicked(view: View) {
         directCall.end()
+    }
+
+    private fun onScreenShareButtonClicked(view: View) {
+        if (!directCall.isVideoCall) {
+            return
+        }
+
+        if (directCall.isLocalScreenShareEnabled) {
+            directCall.stopScreenShare(object :CompletionHandler {
+                override fun onResult(e: SendBirdException?) {
+                    if (e == null) {
+                        screenShareButton.text = "Start Screen Share"
+                    }
+
+                    stopScreenShareService()
+                }
+            })
+        } else {
+            startScreenShareService()
+            requestScreenCapturePermission()
+        }
+    }
+
+    private fun requestScreenCapturePermission() {
+        startActivityForResult(mpm.createScreenCaptureIntent(), MEDIA_PROJECTION_REQUEST_CODE)
+    }
+
+    private fun startScreenShareService() {
+        context?.let { it.startService(Intent(it, ScreenShareService::class.java)) }
+    }
+
+    private fun stopScreenShareService() {
+        context?.let { it.stopService(Intent(it, ScreenShareService::class.java)) }
     }
 
     private val directCallListener: DirectCallListener = object : DirectCallListener() {
@@ -138,9 +181,24 @@ class CallFragment : Fragment() {
             statusTextView.text = CallStatus.ENDED.toString()
             durationTimer?.cancel()
             durationTimer = null
+            stopScreenShareService()
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigateUp()
             }, 1000)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == MEDIA_PROJECTION_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                data?.let { directCall.startScreenShare(it, null) }
+            } else {
+                stopScreenShareService()
+            }
+        }
+    }
+
+    companion object {
+        const val MEDIA_PROJECTION_REQUEST_CODE = 1
     }
 }
