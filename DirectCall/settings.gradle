@@ -1,3 +1,4 @@
 rootProject.name = "DirectCall"
 include ':basic'
 include ':screenshare'
+include ':recording'

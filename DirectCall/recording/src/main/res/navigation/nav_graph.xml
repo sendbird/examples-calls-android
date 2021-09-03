@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dialFragment">
+
+
+    <fragment
+        android:id="@+id/dialFragment"
+        android:name="com.sendbird.calls.examples.directcall.recording.DialFragment"
+        android:label="fragment_dial"
+        tools:layout="@layout/fragment_dial" >
+        <action
+            android:id="@+id/action_dialFragment_to_callFragment"
+            app:destination="@id/callFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/callFragment"
+        android:name="com.sendbird.calls.examples.directcall.recording.CallFragment"
+        android:label="fragment_call"
+        tools:layout="@layout/fragment_call" >
+        <argument
+            android:name="callId"
+            app:argType="string" />
+        <argument
+            android:name="isAccepted"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="isDeclined"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+
+</navigation>
